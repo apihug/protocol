@@ -1,5 +1,8 @@
 # APIHug Protocol Framework
 
+
+ [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/apihug/protocol)
+
 APIHug is a comprehensive Protobuf-based framework designed to streamline API development, database modeling, and service integration. It provides standardized extensions for creating robust enterprise applications with consistent data models and API contracts.
 
 ## Overview
@@ -164,3 +167,25 @@ The framework includes features specifically designed for Large Language Model i
 ## License
 
 This project is licensed under the terms specified in the LICENSE file.
+
+
+## Refer
+
+1. [Apihug Protocol](https://github.com/apihug/protocol)
+2. [Apihug Github](https://apihug.github.io/)
+3. [ApiHug](https://apihug.com/)
+4. [ApiHug starter](https://apihug.com/docs/start)
+5. [Apihug GitHub Repository](https://github.com/apihug/apihug.com/)
+6. [Apihug Wire Plugin Documentation](https://github.com/apihug/apihug.com/blob/master/docs/handbook/004_dsl_implement_wire.md)
+7. [Apihug Stub Plugin Documentation](https://github.com/apihug/apihug.com/blob/master/docs/handbook/005_dsl_implement_stub.md)
+8. [Apihug Trivial Information](https://github.com/apihug/apihug.com/blob/master/docs/handbook/099_trivial.md)
+9. [Apihug Frequently Asked Questions](https://github.com/apihug/apihug.com/blob/master/docs/handbook/999_faq.md)
+10. [Official Gradle Documentation](https://docs.gradle.org)
+11. [Spring Boot Gradle Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/3.2.0/gradle-plugin/reference/html/)
+12. [ApiHug - API Design Copilot IDEA Plugin](https://plugins.jetbrains.com/plugin/23534-apihug--api-design-copilot)
+13. [ApiHug - IDEA FAQ](https://github.com/apihug/apihug.com/blob/master/docs/IDE/999_FAQ.md)
+14. [ApiHug - IDEA Handbook](https://github.com/apihug/apihug.com/blob/master/docs/IDE/README.md)
+15. [ApiHug101 on Bilibili](https://www.bilibili.com/video/BV1KK421k7J8/)
+16. [ApiHug101 on YouTube](https://youtube.com/@ApiHug?si=C1yw0poHA01zbmyj)
+17. [ApiHug Official Website](https://apihug.github.io) | [ApiHug Commercial Site](https://www.apihug.com)
+18. [Release Notes for 0.7.8-RELEASE](https://github.com/apihug/apihug.com/blob/master/docs/framework/versions/0.7.8.md)

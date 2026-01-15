@@ -1,0 +1,78 @@
+name: apihug-proto-design
+description: "Proto design workflow - Contract-first API and domain modeling"
+author: "ApiHug"
+
+# Configuration
+config_source: "{project-root}/_bmad/bmm/config.yaml"
+user_name: "{config_source}:user_name"
+communication_language: "{config_source}:communication_language"
+date: system-generated
+
+# Domain selection
+domains_all: "{config_source}:domains:all"
+domain: "{context.domain || auto_select_or_prompt(domains_all)}"
+
+# Module (unified architecture: proto + generated + handwritten)
+domain_module: "{config_source}:domains:details:{domain}"
+module_path: "{domain_module}:path"
+module_gradle_module: "{domain_module}:gradleModule"
+
+# Wire configuration
+hope_wire: "{module_path}/src/main/resources/hope-wire.json"
+package_name: "{hope_wire}:packageName"
+package_path: "convert_dots_to_slashes({package_name})"
+proto_output_root: "{module_path}/src/main/proto/{package_path}"
+module_name: "{hope_wire}:name"
+domain_name: "{hope_wire}:domain"
+application_name: "{hope_wire}:application"
+artifact_group_id: "{hope_wire}:artifact.groupId"
+artifact_group_path: "convert_dots_to_slashes({artifact_group_id})"
+artifact_artifact_id: "{hope_wire}:artifact.artifactId"
+authority_enum_class: "{hope_wire}:authority.enumClass"
+
+# Meta index (generated after build)
+meta_index: "{module_path}/src/main/resources/apihug.idx.csv"
+
+# Workflow components
+installed_path: "{project-root}/_bmad/bmm/workflows/apihug/proto-design"
+bible: "{installed_path}/bible.md"
+instructions: "{installed_path}/instructions.xml"
+validation: "{installed_path}/checklist.md"
+
+# Specification documents
+specs_root: "{project-root}/_bmad/bmm/workflows/apihug/specs"
+spec_constant: "{specs_root}/constant.md"
+spec_domain: "{specs_root}/domain.md"
+spec_swagger: "{specs_root}/swagger.md"
+
+# ApiHug proto extensions
+apihug_proto: "{project-root}/_bmad/bmm/workflows/apihug/proto/protobuf"
+apihug_proto_domain: "{apihug_proto}/domain"
+apihug_proto_constant: "{apihug_proto}/extend"
+apihug_proto_mock: "{apihug_proto}/mock"
+apihug_proto_swagger: "{apihug_proto}/swagger"
+
+# Variables
+variables:
+  module_root: "{module_path}"
+  proto_api_path: "{proto_output_root}/api"
+  proto_domain_path: "{proto_output_root}/domain"
+  proto_infra_path: "{proto_output_root}/infra"
+  generated_wire_path: "{module_path}/src/main/_wire_"
+  generated_api_path: "{module_path}/src/main/_api_"
+
+# Input patterns
+input_file_patterns:
+  wire_config:
+    description: "Wire module configuration"
+    whole: "{hope_wire}"
+    load_strategy: "ALWAYS_LOAD"
+  meta_index_csv:
+    description: "Compressed components and entities index"
+    whole: "{meta_index}"
+    load_strategy: "ALWAYS_LOAD"
+
+project_context: "**/project-context.md"
+default_output_file: "{module_path}/PROTO_DESIGN_SUMMARY.md"
+standalone: true
+web_bundle: false

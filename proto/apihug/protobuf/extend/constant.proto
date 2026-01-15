@@ -1,0 +1,224 @@
+syntax = "proto3";
+
+package hope.constant;
+
+import "google/protobuf/descriptor.proto";
+
+option java_multiple_files = true;
+option java_outer_classname = "ConstantProto";
+option java_package = "hope.proto.constant";
+
+//Enum Extend for both the error and biz Enum
+extend google.protobuf.EnumValueOptions {
+
+  // extend meta for the enum values, must base on enum fields
+  // in protobuf messages.
+  //
+  // Examples:
+  //
+  //   BABY = 0 [(hope.constant.field) = {code:1, message:"baby", cn_message:"宝贝"}];
+
+  Meta field = 37020;
+}
+
+// those for the enum item's extends
+// if not set
+// code is the enum order
+// message is the enum name
+// cn_message is the enum name
+message Meta {
+
+  //this is the code of this constant, without the offset
+  //the framework will hand this stuff
+  int32 code = 1;
+
+  // this is the description of this constant
+  // this should be primary language supported(for example english)
+  string message = 2;
+
+  // Deprecated since 2024-05-08 from logic
+  // Then will be removed before 1.0.0 official version
+  // eventually use the i18n to solve this issue
+  //string cn_message = 3 [deprecated = true];
+
+  // this is another description of this constant
+  // This will be the second language supported(for example chinese)
+  string message2 = 4;
+
+  // those for the error extension
+  // if this set then this will
+  Error error = 5;
+}
+
+
+enum HttpStatus {
+
+  UNDEFINE = 0;
+
+  // 400  CLIENT_ERROR     Bad Request
+  BAD_REQUEST = 400;
+
+  // 401  CLIENT_ERROR     Unauthorized
+  UNAUTHORIZED = 401;
+
+  // 402  CLIENT_ERROR     Payment Required
+  PAYMENT_REQUIRED = 402;
+
+  // 403  CLIENT_ERROR     Forbidden
+  FORBIDDEN = 403;
+
+  // 404  CLIENT_ERROR     Not Found
+  NOT_FOUND = 404;
+
+  // 405  CLIENT_ERROR     Method Not Allowed
+  METHOD_NOT_ALLOWED = 405;
+
+  // 406  CLIENT_ERROR     Not Acceptable
+  NOT_ACCEPTABLE = 406;
+
+  // 407  CLIENT_ERROR     Proxy Authentication Required
+  PROXY_AUTHENTICATION_REQUIRED = 407;
+
+  // 408  CLIENT_ERROR     Request Timeout
+  REQUEST_TIMEOUT = 408;
+
+  // 409  CLIENT_ERROR     Conflict
+  CONFLICT = 409;
+
+  // 410  CLIENT_ERROR     Gone
+  GONE = 410;
+
+  // 411  CLIENT_ERROR     Length Required
+  LENGTH_REQUIRED = 411;
+
+  // 412  CLIENT_ERROR     Precondition Failed
+  PRECONDITION_FAILED = 412;
+
+  // 413  CLIENT_ERROR     Payload Too Large
+  PAYLOAD_TOO_LARGE = 413;
+
+  // 414  CLIENT_ERROR     URI Too Long
+  URI_TOO_LONG = 414;
+
+  // 415  CLIENT_ERROR     Unsupported Media Type
+  UNSUPPORTED_MEDIA_TYPE = 415;
+
+  // 416  CLIENT_ERROR     Requested range not satisfiable
+  REQUESTED_RANGE_NOT_SATISFIABLE = 416;
+
+  // 417  CLIENT_ERROR     Expectation Failed
+  EXPECTATION_FAILED = 417;
+
+  // 418  CLIENT_ERROR     I'm a teapot
+  I_AM_A_TEAPOT = 418;
+
+  // 419  CLIENT_ERROR     Insufficient Space On Resource
+  INSUFFICIENT_SPACE_ON_RESOURCE = 419;
+
+  // 420  CLIENT_ERROR     Method Failure
+  METHOD_FAILURE = 420;
+
+  // 421  CLIENT_ERROR     Destination Locked
+  DESTINATION_LOCKED = 421;
+
+  // 422  CLIENT_ERROR     Unprocessable Entity
+  UNPROCESSABLE_ENTITY = 422;
+
+  // 423  CLIENT_ERROR     Locked
+  LOCKED = 423;
+
+  // 424  CLIENT_ERROR     Failed Dependency
+  FAILED_DEPENDENCY = 424;
+
+  // 425  CLIENT_ERROR     Too Early
+  TOO_EARLY = 425;
+
+  // 426  CLIENT_ERROR     Upgrade Required
+  UPGRADE_REQUIRED = 426;
+
+  // 428  CLIENT_ERROR     Precondition Required
+  PRECONDITION_REQUIRED = 428;
+
+  // 429  CLIENT_ERROR     Too Many Requests
+  TOO_MANY_REQUESTS = 429;
+
+  // 431  CLIENT_ERROR     Request Header Fields Too Large
+  REQUEST_HEADER_FIELDS_TOO_LARGE = 431;
+
+  // 451  CLIENT_ERROR     Unavailable For Legal Reasons
+  UNAVAILABLE_FOR_LEGAL_REASONS = 451;
+
+  // 500  SERVER_ERROR     Internal Server Error
+  INTERNAL_SERVER_ERROR = 500;
+
+  // 501  SERVER_ERROR     Not Implemented
+  NOT_IMPLEMENTED = 501;
+
+  // 502  SERVER_ERROR     Bad Gateway
+  BAD_GATEWAY = 502;
+
+  // 503  SERVER_ERROR     Service Unavailable
+  SERVICE_UNAVAILABLE = 503;
+
+  // 504  SERVER_ERROR     Gateway Timeout
+  GATEWAY_TIMEOUT = 504;
+
+  // 505  SERVER_ERROR     HTTP Version not supported
+  HTTP_VERSION_NOT_SUPPORTED = 505;
+
+  // 506  SERVER_ERROR     Variant Also Negotiates
+  VARIANT_ALSO_NEGOTIATES = 506;
+
+  // 507  SERVER_ERROR     Insufficient Storage
+  INSUFFICIENT_STORAGE = 507;
+
+  // 508  SERVER_ERROR     Loop Detected
+  LOOP_DETECTED = 508;
+
+  // 509  SERVER_ERROR     Bandwidth Limit Exceeded
+  BANDWIDTH_LIMIT_EXCEEDED = 509;
+
+  // 510  SERVER_ERROR     Not Extended
+  NOT_EXTENDED = 510;
+
+  // 511  SERVER_ERROR     Network Authentication Required
+  NETWORK_AUTHENTICATION_REQUIRED = 511;
+}
+
+// extension for the constant error types only
+message Error {
+
+  enum Phase {
+    // Controller 表单层
+    CONTROLLER = 0;
+    // Service 服务层
+    SERVICE = 1;
+    // Domain 领域层
+    DOMAIN = 2;
+  }
+
+  enum Severity {
+    // Low  低,无影响
+    LOW = 0;
+    // Warn 警告,业务错误可重试
+    WARN = 1;
+    // Error 错误,业务无法进行
+    ERROR = 2;
+    // Fatal 灾难,数据破坏
+    FATAL = 3;
+  }
+
+  // error's title
+  string title = 2;
+  // any tips if present
+  string tips = 5;
+
+  // for the http status if any present
+  // otherwise will generic be the internal server error
+  HttpStatus http_status = 6;
+
+  // which Phase this error thrown
+  Phase phase = 16;
+  // the severity of this error
+  Severity severity = 17;
+}

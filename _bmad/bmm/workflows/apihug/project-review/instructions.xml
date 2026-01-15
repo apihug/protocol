@@ -1,0 +1,145 @@
+<workflow>
+  <critical>The workflow execution engine is governed by: {project-root}/_bmad/core/tasks/workflow.xml</critical>
+  <critical>You MUST have already loaded and processed: {installed_path}/workflow.yaml</critical>
+  <critical>Communicate all responses in {communication_language}</critical>
+  <critical>Generate all documents in {document_output_language}</critical>
+
+  <critical>📖 Read the ApiHug Project Review Bible: {bible}</critical>
+  <critical>Respect ApiHug Source Set Convention: generated code in `src/generated/main/{api,domain,wire,mcp,cloud}` (read-only), handwritten code in `src/main/{java,trait,proto}`. Review MUST ensure no hand-written code exists in src/generated/ directories.</critical>
+
+  <step n="1" goal="Check project structure and configuration">
+    <output>**🏗️ Step 1: Project structure check**</output>
+
+    <action>Inspect {settings_gradle} for:
+      - Included modules that correspond to configured domains (e.g., {module_gradle_module})
+      - Naming conventions
+      - Basic dependency graph</action>
+
+    <action>Inspect {hope_wire} for:
+      - packageName consistency with proto packages
+      - name/domain/application semantics
+      - artifact.groupId/artifact.artifactId naming
+      - authority.enumClass existence</action>
+
+    <output>✅ Project structure and basic configuration reviewed</output>
+  </step>
+
+  <step n="2" goal="Assess proto design quality">
+    <output>**📦 Step 2: Proto design quality**</output>
+
+    <action>Review proto directory layout under {module_path}/src/main/proto/{package_name}:
+      - api/ for external APIs
+      - domain/ for entities and views
+      - infra/ for constants, errors, authorities</action>
+
+    <action>For Constant definitions under infra/**:
+      - Check use of (hope.constant.field) and (hope.constant.error)
+      - Verify uniqueness of error codes
+      - Confirm message/message2 and HTTP status/category/severity</action>
+
+    <action>For Domain definitions under domain/**:
+      - Check (hope.persistence.table)/(hope.persistence.column)/(hope.persistence.view)
+      - Validate primary keys, indexes, unique constraints
+      - Review wires usage (AUDITABLE/DELETABLE/TENANT_ISOLATE)</action>
+
+    <action>For Swagger & Mock under api/**:
+      - Check (hope.swagger.svc)/(hope.swagger.operation)/(hope.swagger.schema)/(hope.swagger.field)
+      - If mock is used, ensure it is attached as mock { ... } inside swagger metadata</action>
+
+    <output>✅ Proto design reviewed for Constant/Domain/Swagger/Mock</output>
+  </step>
+
+  <step n="3" goal="Review generated vs handwritten code organization">
+    <output>**🧬 Step 3: Generated code vs handwritten code**</output>
+
+    <action>Inspect {module_path} for:
+      - Generated directories: src/generated/main/{api,domain,wire,mcp,cloud}, src/generated/test/{api,domain,wire}
+      - Handwritten code locations: src/main/{java,trait,proto}, src/test/{java,trait}</action>
+
+    <action>Flag violations if:
+      - Handwritten Controllers/Service interfaces/DTOs/Entities are found
+      - Generated directories (src/generated/**) are modified manually
+      - jakarta persistence annotations (@Entity, @Table, etc.) are used
+      - Field injection (@Autowired on fields) is used</action>
+
+    <output>✅ Code organization and generation boundaries reviewed</output>
+  </step>
+
+  <step n="4" goal="Analyze module dependencies">
+    <output>**🔗 Step 4: Dependency analysis**</output>
+
+    <action>Inspect build scripts:
+      - {proto_build_gradle} for it-common-proto and wire/protobuf configuration
+      - {app_build_gradle} for dependency on proto module, Spring Data JDBC, Liquibase (if needed)</action>
+
+    <action>Identify potential issues:
+      - Missing or incorrect dependencies
+      - Misuse of persistence technologies (e.g., JPA instead of JDBC)
+      - Signs of circular dependencies between modules</action>
+
+    <output>✅ Dependencies analyzed for proto/app modules</output>
+  </step>
+
+  <step n="5" goal="Evaluate evolvability and testing">
+    <output>**📈 Step 5: Evolvability & testing**</output>
+
+    <action>Evaluate protocol versioning and backward compatibility:
+      - How versioning is expressed (package/path/etc.)
+      - Whether new fields are added in a backward-compatible way
+      - Whether destructive changes are avoided</action>
+
+    <action>Evaluate testing:
+      - Existence of unit tests and integration tests
+      - Contract tests around generated APIs (src/generated/test/api/)
+      - Coverage levels vs team standards</action>
+
+    <output>✅ Evolvability and testing evaluated</output>
+  </step>
+
+  <step n="6" goal="Produce structured review report">
+    <output>**📝 Step 6: Produce review report**</output>
+
+    <ask>Provide brief scores (1–10) for each dimension: structure, proto, code organization, dependencies, evolvability.</ask>
+    <action>Set {{scores}} = user input</action>
+
+    <ask>List major findings: severe issues, normal issues, optimization suggestions.</ask>
+    <action>Set {{findings}} = user input</action>
+
+    <ask>Describe short-term (1–2 weeks), mid-term (1–2 months), and long-term (3–6 months) improvement plan.</ask>
+    <action>Set {{plans}} = user input</action>
+
+    <action>Generate review report at {module_path}/docs/project-review-{{domain_name}}-{{module_name}}.md</action>
+
+    <output file="{module_path}/docs/project-review-{{domain_name}}-{{module_name}}.md">
+# ApiHug Project Review Report
+
+**Domain**: {{domain_name}}
+**Module**: {{module_name}}
+**Date**: {{date}}
+**Reviewer**: {{user_name}}
+
+## 1. Quality Scores
+
+{{scores}}
+
+## 2. Findings
+
+{{findings}}
+
+## 3. Improvement Plan
+
+{{plans}}
+
+## 4. References
+
+- Module path: {module_path}
+- Wire configuration: {hope_wire}
+
+---
+*Generated by ApiHug Project Review Workflow*
+    </output>
+
+    <output>✅ Project review completed. Report saved to: {module_path}/docs/project-review-{{domain_name}}-{{module_name}}.md</output>
+  </step>
+
+</workflow>

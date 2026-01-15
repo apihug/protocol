@@ -1,0 +1,87 @@
+name: apihug-app-implement
+description: "Spring Boot business logic implementation"
+author: "ApiHug"
+
+# Configuration
+config_source: "{project-root}/_bmad/bmm/config.yaml"
+user_name: "{config_source}:user_name"
+communication_language: "{config_source}:communication_language"
+date: system-generated
+
+# Domain selection
+domains_all: "{config_source}:domains:all"
+domain: "{context.domain || auto_select_or_prompt(domains_all)}"
+
+# Module (unified architecture: proto + generated + handwritten)
+domain_module: "{config_source}:domains:details:{domain}"
+module_path: "{domain_module}:path"
+module_gradle_module: "{domain_module}:gradleModule"
+
+# Wire configuration
+hope_wire: "{module_path}/src/main/resources/hope-wire.json"
+package_name: "{hope_wire}:packageName"
+package_path: "convert_dots_to_slashes({package_name})"
+proto_output_root: "{module_path}/src/main/proto/{package_path}"
+module_name: "{hope_wire}:name"
+domain_name: "{hope_wire}:domain"
+application_name: "{hope_wire}:application"
+artifact_group_id: "{hope_wire}:artifact.groupId"
+artifact_group_path: "convert_dots_to_slashes({artifact_group_id})"
+artifact_artifact_id: "{hope_wire}:artifact.artifactId"
+authority_enum_class: "{hope_wire}:authority.enumClass"
+
+# Workflow components
+installed_path: "{project-root}/_bmad/bmm/workflows/apihug/app-implement"
+bible: "{installed_path}/bible.md"
+template: "{installed_path}/template.md"
+instructions: "{installed_path}/instructions.xml"
+validation: "{installed_path}/checklist.md"
+
+# Variables
+variables:
+  module_root: "{module_path}"
+  proto_api_path: "{proto_output_root}/api"
+  proto_domain_path: "{proto_output_root}/domain"
+  proto_infra_path: "{proto_output_root}/infra"
+  generated_api_path: "{module_path}/src/main/_api_"
+  generated_domain_path: "{module_path}/src/main/_domain_"
+  generated_wire_path: "{module_path}/src/main/_wire_"
+  impl_path: "{module_path}/src/main/java"
+  trait_path: "{module_path}/src/main/trait"
+  test_path: "{module_path}/src/test/java"
+
+# Input patterns
+input_file_patterns:
+  wire_config:
+    description: "Wire module configuration"
+    whole: "{hope_wire}"
+    load_strategy: "ALWAYS_LOAD"
+  proto_definitions:
+    description: "Proto API definitions"
+    whole: "{module_path}/src/main/proto/**/*.proto"
+    load_strategy: "SELECTIVE_LOAD"
+  generated_api:
+    description: "Generated API code"
+    whole: "{generated_api_path}/**/*.java"
+    load_strategy: "SELECTIVE_LOAD"
+  generated_domain:
+    description: "Generated domain entities"
+    whole: "{generated_domain_path}/**/*.java"
+    load_strategy: "SELECTIVE_LOAD"
+  generated_wire:
+    description: "Generated wire components"
+    whole: "{generated_wire_path}/**/*.java"
+    load_strategy: "SELECTIVE_LOAD"
+  implementation:
+    description: "Service implementations"
+    whole: "{impl_path}/**/*ServiceImpl.java"
+    load_strategy: "SELECTIVE_LOAD"
+  repositories:
+    description: "Repository extensions"
+    whole: "{trait_path}/**/*Repository.java"
+    load_strategy: "SELECTIVE_LOAD"
+
+project_context: "**/project-context.md"
+default_output_file: "{module_path}/IMPLEMENTATION_SUMMARY.md"
+standalone: true
+web_bundle: false

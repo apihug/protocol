@@ -1,0 +1,475 @@
+syntax = "proto3";
+
+package hope.mock;
+
+//import "google/protobuf/wrappers.proto";
+
+option java_multiple_files = true;
+option java_outer_classname = "MockProto";
+option java_package = "hope.proto.mock";
+
+
+//
+// those concept we copy from mock.js and java Faker logic
+//
+// those kind can be named with nature type
+//
+enum Nature {
+
+  // animal name
+  ANIMAL = 0;
+
+  // avatar url
+  AVATAR = 2;
+
+  // beer brand
+  BEER = 3;
+
+  // book name
+  BOOK = 4;
+
+  // business kind
+  BUSINESS = 6;
+
+  // cat kind
+  CAT = 7;
+
+  // color
+  COLOR = 8;
+
+  // country name
+  COUNTRY = 10;
+
+  // currency name
+  CURRENCY = 11;
+
+  // date and time identify
+  DATE_AND_TIME = 12;
+
+  // dog name
+  DOG = 13;
+
+  // food name
+  FOOD = 14;
+
+
+  // funny play name
+  FUNNY_NAME = 16;
+
+  // gender male or female
+  GENDER = 18;
+
+  // hobbit like fishing
+  HOBBIT = 19;
+
+  // job kind
+  JOB = 20;
+
+  // medical kind
+  MEDICAL = 22;
+
+  // music type and name
+  MUSIC = 23;
+
+  // name for english country as default
+  NAME = 24;
+
+  // nation name
+  NATION = 25;
+
+  // programing language like java c++ etc
+  PROGRAMMING_LANGUAGE = 27;
+
+  // the stock name like apple
+  STOCK = 28;
+
+  // team name
+  TEAM = 29;
+
+  // weather like cloudy etc
+  WEATHER = 30;
+
+  // the name and character from the space
+  SPACE = 31;
+
+  // disease like headache
+  DISEASE = 32;
+
+  // email address
+  EMAIL = 33;
+
+  // ip4 like 192.168.1.11
+  IP4 = 34;
+
+  // ip6 very long one
+  IP6 = 35;
+
+  // http url like https://dearxue.com
+  URL = 36;
+
+  // UUID
+  GUID = 38;
+
+  // chinese gender like 男/女
+  CN_GENDER = 39;
+
+  // chinese address like 上海 静安
+  CN_ADDRESS = 40;
+
+  // chinese phone 152217336214
+  CN_PHONE = 41;
+
+  // other country phone number
+  PHONE = 42;
+
+  // other country university
+  UNIVERSITY = 43;
+
+  // chine university
+  CN_UNIVERSITY = 44;
+
+  // other country ID
+  ID = 50;
+
+  // Chinese ID
+  CID = 51;
+
+  // medicine name
+  MEDICINE = 52;
+
+  // hospital name
+  HOSPITAL = 53;
+
+}
+
+enum Pool {
+
+  //keep the original format of the string, no transform
+  ORIGINAL = 0;
+
+  // all to low case
+  LOWER = 1;
+
+  // all to upper case
+  UPPER = 2;
+
+
+  // all are number
+  NUMBER = 4;
+
+  // only symbol
+  SYMBOL = 8;
+
+  // upper first character
+  CAPITALIZE = 10;
+}
+
+message StringRule {
+
+  // exactly the size of the string
+  uint32 length = 1;
+
+  // pool from one kind of:
+  oneof pool_kind {
+    string customized_pool = 2;
+    Pool pool = 3;
+  }
+
+  // min size of the string
+  uint32 min = 13;
+  // max size of the string
+  uint32 max = 14;
+
+  //if this present only pick string from this List
+  repeated string candidates = 20;
+}
+
+message BoolRule {
+  // min size of the string
+  uint32 min = 1;
+  // max size of the string
+  uint32 max = 2;
+  // current start with?
+  bool current = 3;
+}
+
+message NumberRule {
+  //integer part min
+  int64 min = 1;
+  //integer part max
+  int64 max = 2;
+
+  //fraction part min digit size for example 2 is 100
+  uint32 min_fraction = 3;
+  //fraction part max digit size for example 2 is 100
+  uint32 max_fraction = 4;
+
+  //integer part min digit size for example 2 is 100
+  uint32 min_integer = 5;
+  //integer part max digit size for example 2 is 100
+  uint32 max_integer = 6;
+}
+
+message DateRule {
+
+  message BirthDay {
+    // min age like if it is 3 then date is  (now - 3years)
+    uint32 min_age = 1;
+    // max age like if it is 70 then the date is (now - 70years)
+    uint32 max_age = 2;
+  }
+
+  enum TimeUnit {
+    // Time UNIT 1000nano = 1mcs
+    NANOSECONDS = 0;
+
+    // Time UNIT 1000mcs  = 1ms
+    MICROSECONDS = 1;
+
+    // Time UNIT 1000ms  = 1s
+    MILLISECONDS = 2;
+
+    // Time UNIT 60s  = 1m
+    SECONDS = 3;
+
+    // Time UNIT 60m = 1h
+    MINUTES = 4;
+
+    // Time UNIT 24h = 1d
+    HOURS = 5;
+
+    // Time UNIT 360d = 1y
+    DAYS = 6;
+  }
+
+  enum Dir {
+    // past date
+    PAST = 0;
+
+    // future date
+    FUTURE = 1;
+  }
+
+  //
+  // if this is birthday type it has top priority
+  //
+  BirthDay birth_day = 1;
+
+  //
+  // time gap in integer, we will calculate it in a range [1, time_gap]
+  //
+  uint32 time_gap = 2;
+
+  //
+  // Time unit easy to set
+  //
+  TimeUnit time_unit = 3;
+
+  //
+  // past or future
+  //
+  Dir dir = 4;
+
+}
+
+message ImageRule {
+  // with of the image
+  uint32 width = 1;
+
+  // height of the image
+  uint32 height = 2;
+
+  // back group color of the image
+  string background_hex_color = 3;
+
+  // the text on the image
+  string text = 4;
+}
+
+message ColorRule {
+
+  enum Type {
+
+    // #FFF
+    HEX = 0;
+
+    // rgb(121, 210, 242)
+    RGB = 2;
+
+    // "rgba(121, 242, 167, 0.50)"
+    RGBA = 3;
+
+    // "hsl(228, 82, 71)"
+    HSL = 4;
+
+    // red, blue, yellow
+    NAME = 5;
+  }
+
+  // style of the color
+  Type type = 1;
+}
+
+//
+// this for the chinese sentence
+//
+message ChineseRule {
+  enum Type {
+    // very long paragraph
+    PARAGRAPH = 0;
+
+    // middle size
+    SENTENCE = 1;
+
+    // only a word, like human apple etc
+    WORD = 3;
+
+    // title, news title
+    TITLE = 4;
+  }
+
+  // kind of this string type
+  Type type = 1;
+
+  // the exact length
+  uint32 length = 2;
+
+  // the max length
+  uint32 max = 3;
+
+  // the min length
+  uint32 min = 4;
+
+  // sample of the string like: apple, then we can only use [a, p, p, l, e]
+  string pool = 5;
+}
+
+//
+// this rule for the chinese name
+//
+message ChineseNameRule {
+  enum Type {
+    // first name
+    FIRST = 0;
+
+    // last name
+    LAST = 1;
+
+    // full name
+    NAME = 3;
+  }
+  Type type = 1;
+}
+
+message ChinaAddressRule {
+
+  enum Type {
+    // 区域 : "华北"
+    REGION = 0;
+    // 省 : "陕西省"
+    PROVINCE = 1;
+    // 市: "淮北市"
+    CITY = 2;
+    // 区: "东昌区"
+    COUNTY = 3;
+    // 全: 上海市，闵行区，联航路1188号
+    ADDRESS = 4;
+  }
+  Type type = 1;
+
+  bool with_prefix = 2;
+}
+
+
+message ArrayRule {
+
+  oneof rule {
+    Nature nature = 1;
+    StringRule string_rule = 3;
+    BoolRule bool_rule = 4;
+    DateRule date_rule = 5;
+    ImageRule image_rule = 6;
+    ColorRule color_rule = 7;
+    ChineseRule chinese_rule = 8;
+    ChineseNameRule chinese_name_rule = 9;
+    ChinaAddressRule china_address_rule = 10;
+    NumberRule number_rule = 11;
+  }
+  // control the array max size
+  uint32 max = 100;
+  // control the array min size
+  uint32 min = 101;
+}
+
+message MapRule {
+  oneof keyRule {
+    Nature key_nature = 1;
+    StringRule key_string_rule = 3;
+    BoolRule key_bool_rule = 4;
+    DateRule key_date_rule = 5;
+    ImageRule key_image_rule = 6;
+    ColorRule key_color_rule = 7;
+    ChineseRule key_chinese_rule = 8;
+    ChineseNameRule key_chinese_name_rule = 9;
+    ChinaAddressRule key_china_address_rule = 10;
+    NumberRule key_number_rule = 11;
+  }
+
+  oneof valueRule {
+    Nature val_nature = 101;
+    StringRule val_string_rule = 102;
+    BoolRule val_bool_rule = 104;
+    DateRule val_date_rule = 105;
+    ImageRule val_image_rule = 106;
+    ColorRule val_color_rule = 107;
+    ChineseRule val_chinese_rule = 108;
+    ChineseNameRule val_chinese_name_rule = 109;
+    ChinaAddressRule val_china_address_rule = 110;
+    NumberRule val_number_rule = 111;
+  }
+
+
+  // control the array max size
+  uint32 max = 200;
+  // control the array min size
+  uint32 min = 201;
+}
+
+
+//
+// Several thing inspire us
+//
+// https://www.apifox.cn/help/app/mock/
+//
+// http://mockjs.com/
+//
+// https://github.com/DiUS/java-faker/
+//
+// this used basic in the test phase
+//
+message Mock {
+
+  oneof rule {
+    Nature nature = 1;
+    StringRule string_rule = 3;
+    BoolRule bool_rule = 4;
+    DateRule date_rule = 5;
+    ImageRule image_rule = 6;
+    ColorRule color_rule = 7;
+    ChineseRule chinese_rule = 8;
+    ChineseNameRule chinese_name_rule = 9;
+    ChinaAddressRule china_address_rule = 10;
+    NumberRule number_rule = 11;
+
+
+    // complex for the array
+    ArrayRule array_rule = 111 [deprecated = true];
+
+    // complex for struct
+    MapRule map_rule = 112;
+  }
+  //This is shortcut for the array rule, max item, control list size
+  uint32  max = 200;
+  //This is shortcut fo the array rule, min item, control list size
+  uint32  min = 201;
+}

@@ -1,0 +1,139 @@
+# APIHug Protocol Framework
+
+## Overview
+APIHug is a comprehensive Protobuf-based framework designed to streamline API development, database modeling, and service integration. It provides standardized extensions for creating robust enterprise applications with consistent data models and API contracts.
+
+## Core Components
+
+### 1. Swagger Extensions (`apihug/protobuf/swagger/`)
+- **Purpose**: Map protobuf service RPCs to HTTP RESTful APIs and generate OpenAPI/Swagger documentation
+- **Key Features**:
+  - HTTP API mapping from protobuf services
+  - OpenAPI documentation generation
+  - Front-end/back-end integration
+  - Authorization and security controls (RBAC)
+  - Pagination support (pageable flag)
+  - Raw response handling
+  - Multi-group API organization (CUSTOMER/TENANT/PLATFORM)
+  - LLM-friendly API definitions with natural language questions
+  - Customizable request/response schemas
+  - Mock data generation capabilities
+
+### 2. Domain Persistence (`apihug/protobuf/domain/`)
+- **Purpose**: Map protobuf messages to database table structures (entities)
+- **Key Features**:
+  - Database entity modeling
+  - DDL generation
+  - Liquibase integration for database migrations
+  - Support for multiple databases (MySQL, PostgreSQL, Oracle, SQL Server, etc.)
+  - Built-in wire protocols (Auditable, Deletable, Identifiable, Tenantable, Versionable)
+  - Index and unique constraint management
+  - View definitions for different data projections
+  - Advanced column configurations (nullable, searchable, sortable, etc.)
+  - Enum mapping strategies (STRING/CODE)
+  - Primary key generation strategies (TABLE, SEQUENCE, IDENTITY, UUID, AUTO)
+
+### 3. Constants & Error Handling (`apihug/protobuf/extend/`)
+- **Purpose**: Extend enums with business codes, multilingual messages, and error metadata
+- **Key Features**:
+  - Business code assignment for enum values
+  - Multilingual support (English and Chinese messages)
+  - Error code extensions with detailed metadata
+  - HTTP status code mapping
+  - Error severity levels (LOW/WARN/ERROR/FATAL)
+  - Processing phase categorization (CONTROLLER/SERVICE/DOMAIN)
+
+## Architecture Principles
+
+### Layer Isolation
+- API layer (swagger/) must not reference Domain entities
+- Domain layer (domain/) must remain architecture-pure and not reference API layers
+- Cross-layer referencing is strictly prohibited to maintain clean architecture boundaries
+
+### File-Level Options
+- All file-level options (java_package, java_multiple_files, go_package) are managed by the build system
+- Manual addition of these options is strictly forbidden
+
+### Extension Mechanism
+- Uses Google's Protobuf extension mechanism to add custom options
+- Extends MethodOptions, MessageOptions, ServiceOptions, FieldOptions, and EnumOptions
+- Provides consistent naming conventions with the `hope.` namespace
+
+## Key Features
+
+### 1. Multi-Language Support
+- Java code generation with automatic package management
+- Standardized naming conventions
+- Type-safe enum handling
+
+### 2. Database Integration
+- Supports 12+ database systems
+- Automatic schema generation
+- Custom SQL execution via Liquibase integration
+- View and aggregation support
+
+### 3. API Contract Management
+- OpenAPI v2 specification compliance
+- Security scheme definitions
+- Custom authorization controls
+- Request/response schema validation
+
+### 4. Enterprise Features
+- Multi-tenancy support
+- Audit trail capabilities
+- Soft deletion (logical deletion)
+- Optimistic locking
+- Role-based access control (RBAC)
+
+### 5. LLM Integration
+- Natural language questions for API understanding (added in 2024-08)
+- Few-shot learning patterns for AI consumption
+- API descriptions optimized for language models
+
+## Technical Specifications
+
+### Protobuf Syntax
+- Uses `proto3` syntax exclusively
+- Consistent package naming with `hope.*` namespace
+- Standard imports for extension packages
+
+### Naming Conventions
+- Database tables: UPPERCASE_WITH_UNDERSCORE (e.g., `USER_ORDER`, `PET_CATEGORY`)
+- Database columns: UPPERCASE_WITH_UNDERSCORE (e.g., `USER_ID`, `CREATED_AT`)
+- Index names: `IDX_TABLE_COLUMN` (e.g., `IDX_PET_NAME`)
+- Unique constraints: `UK_TABLE_COLUMN` (e.g., `UK_USER_EMAIL`)
+
+### Wire Protocol Selection Guide
+- Basic ID only: `wires: [IDENTIFIABLE]`
+- With auditing: `wires: [IDENTIFIABLE, AUDITABLE]`
+- With soft deletion: `wires: [IDENTIFIABLE, DELETABLE]`
+- Multi-tenant: `wires: [IDENTIFIABLE, TENANTABLE]`
+- Full features: `wires: [ALL]`
+- Fully custom: `wires: [NONE]`
+
+## Documentation References
+
+Detailed usage guides for each component can be found in the specs/ directory:
+- [API Documentation Guide](./specs/swagger.md) - How to define and document APIs
+- [Domain Modeling Guide](./specs/domain.md) - How to model database entities
+- [Constants Guide](./specs/constant.md) - How to define enums and error codes
+
+## Best Practices
+
+### Performance Optimization
+- Carefully select indexes (avoid over-indexing which impacts write performance)
+- Use appropriate data types (DECIMAL for money, TIMESTAMP for temporal data)
+- Implement pagination for large datasets
+- Use view definitions for common query patterns
+
+### Security Considerations
+- Apply proper authorization controls at API level
+- Use parameter validation and sanitization
+- Implement audit trails for sensitive operations
+- Leverage built-in security schemes (apiKey, oauth2)
+
+### Maintainability
+- Follow consistent naming conventions
+- Document business logic with proper descriptions
+- Use enum codes for stable API contracts
+- Leverage built-in wire protocols for common patterns

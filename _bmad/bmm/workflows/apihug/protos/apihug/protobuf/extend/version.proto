@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+package hope.version;
+
+import "google/protobuf/descriptor.proto";
+
+option java_multiple_files = true;
+option java_outer_classname = "VersionAnnotationsProto";
+option java_package = "hope.proto.version";
+option deprecated = true;
+
+extend google.protobuf.FileOptions {
+  //
+  // the version change list of this file
+  //
+  repeated Version file = 31142 [deprecated=true];
+}
+extend google.protobuf.MethodOptions {
+  //
+  // the version change list of this method
+  //
+  repeated Version method = 31142 [deprecated=true];
+}
+extend google.protobuf.MessageOptions {
+  //
+  // the version change list of this message
+  //
+  repeated Version msg = 31143 [deprecated=true];
+}
+extend google.protobuf.ServiceOptions {
+  //
+  // the version change list of this service
+  //
+  repeated Version svc = 31143 [deprecated=true];
+}
+
+extend google.protobuf.EnumOptions {
+  //
+  // the version change list of this enum
+  //
+  repeated Version enm = 31143;
+}
+
+extend google.protobuf.FieldOptions {
+  //
+  // the version change list of this field
+  //
+  repeated Version field = 31143;
+}
+
+enum VersionTypeEnum {
+  NA = 0;
+  ADD = 1;
+  MODIFY = 2;
+  REMOVE = 3;
+}
+
+
+message Version {
+
+  //
+  // current version of this proto
+  //
+  string version = 1;
+
+  //
+  // update time stamp
+  //
+  string timestamp = 2;
+
+  //
+  // update type, REMOVE in fact has no meaning
+  //
+  VersionTypeEnum type = 10;
+
+  //
+  // update message may include the message + track ID
+  //
+  string message = 11;
+
+  //
+  // this depends on the track system like the JIRA may this be the JIRA ID
+  //
+  string track = 12;
+
+  //
+  // updated by who
+  //
+  string updated_by = 20;
+}

@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+package hope.persistence;
+
+//import "google/protobuf/wrappers.proto";
+
+option java_multiple_files = true;
+option java_outer_classname = "ViewProto";
+option java_package = "hope.proto.persistence";
+
+message AggregatedField {
+
+  enum AggregatedType {
+    COUNT = 0;
+    SUM = 1;
+    AVG = 2;
+    MIN = 3;
+    MAX = 4;
+    DISTINCT = 5;
+    //EXAMPLE: COUNT(DISTINCT country_id)
+    COUNT_DISTINCT = 6;
+  }
+
+  message Refer {
+    string entity = 1;
+    string field = 2;
+  }
+
+  //COUNT has no specific field
+  //SUM, AVG, MIN, MAX has specific field
+  //DISTINCT(t1.a,t1.b,t2.c) has specific field
+  repeated Refer fields = 2;
+
+  AggregatedType type = 3;
+  //alias for the aggregated field if any present other wise use the field to contract
+  string alias = 4;
+}
+
+
+//Domain entity view definition, for internal refer
+message View {
+  //This for this domain entity's main view:
+  string name = 1;
+
+  //View Name in Database if present
+  string view = 2;
+
+  //The description of this view
+  string description = 3;
+
+
+  //the included fields of this view, has high priority than excludes, they will be merged to the finally list
+  repeated string includes = 4;
+  //the excluded fields of this view, must base on the domain fields only
+  repeated string excludes = 5;
+
+  //if this is aggregate view, then this is the aggregated field
+  //possible: count, sum, avg, min, max together
+  repeated AggregatedField aggregated_fields = 6;
+
+  //this is view of another entity
+  message ReferenceView {
+    string entity = 1;
+    //refer to the defined view of the entity
+    string view = 2;
+
+    //the included fields of this view, has high priority than excludes, they will be merged to the finally list
+    repeated string includes = 3;
+    //the excluded fields of this view, must base on the domain fields only
+    repeated string excludes = 4;
+
+    enum JoinType {
+      INNER = 0;
+      LEFT = 1;
+      RIGHT = 2;
+      FULL = 3;
+    }
+
+    JoinType join_type = 10;
+    string left_field = 11;
+    string right_field = 12;
+  }
+  //if any ReferenceView is not empty, then this view is a composite view
+  repeated ReferenceView references = 10;
+}

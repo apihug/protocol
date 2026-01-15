@@ -105,26 +105,32 @@ enum UserStatus {
 ## Getting Started
 
 ### Prerequisites
-- Protocol Buffers (Protobuf) compiler
-- Appropriate language plugins for code generation
+1. ✅ JDK 17+  [OpenJDK](https://openjdk.org/) or Oracle's
+2. ✅ [Gradle](https://gradle.org/install/) 8+
+3. ✅ [IDEA](https://www.jetbrains.com/idea/)  2022+
+4. ✅ [ApiHug - API design Copilot](https://plugins.jetbrains.com/plugin/23534-apihug--api-design-copilot)
+5. ✅ [Spring Initializr](https://start.spring.io/) - Accessible or locally deployed alternatives
 
-### Installation
-1. Clone the repository
-2. Import the required proto files in your service definitions
-3. Use the extensions as demonstrated in the examples above
+The ApiHug framework provides integrated tooling through the IDEA plugin and REPL.
 
-### Usage Examples
+These integrated tools constitute a comprehensive development ecosystem:
+- [ApiHug Framework Starter](https://apihug.github.io/docs/start)
+- [ApiHug REPL](https://apihug.github.io/docs/tool/apihug-repl)
 
-#### Creating an API Service
+This unified toolchain synergistically supports enterprise-grade development.
+
+### Implementation Guidelines
+
+#### API Service Development
 1. Define your service in a `.proto` file
 2. Import `apihug/protobuf/swagger/annotations.proto`
-3. Use the `(hope.swagger.operation)` extension to define API metadata
+3. Utilize the `(hope.swagger.operation)` extension to define API metadata
 4. Generate client/server code using the appropriate plugin
 
-#### Modeling a Database Entity
+#### Database Entity Modeling
 1. Define your message in a `.proto` file
 2. Import `apihug/protobuf/domain/annotations.proto`
-3. Use the `(hope.persistence.table)` and `(hope.persistence.column)` extensions
+3. Utilize the `(hope.persistence.table)` and `(hope.persistence.column)` extensions
 4. Generate database schema using the framework tools
 
 ## Architecture Principles

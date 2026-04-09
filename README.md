@@ -696,7 +696,7 @@ For structured AI-driven development, use BMAD workflows:
 
 | Workflow | Command | Purpose |
 |----------|---------|---------|
-| `bmad-create-product-brief` | `/bmad-create-product-brief` | Capture strategic vision |
+| `bmad-product-brief` | `/bmad-product-brief` | Capture strategic vision |
 | `bmad-create-prd` | `/bmad-create-prd` | Define requirements (FRs/NFRs) |
 | `bmad-create-epics-and-stories` | `/bmad-create-epics-and-stories` | Break into implementable work |
 | `apihug-create-story` | `/apihug-create-story` | Prepare story with ApiHug context |

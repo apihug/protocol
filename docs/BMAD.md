@@ -14,6 +14,7 @@ Since BMAD [6.0](https://docs.bmad-method.org/roadmap/) all move to skill Archit
 | Analysis       | `bmad-product-brief`                  | Capture strategic vision                                         | `product-brief.md`                   |
 | Plan           | `bmad-create-prd`                     | Define requirements (FRs/NFRs)                                   | `PRD.md`                             |
 | Solutioning    | `bmad-create-architecture`            | Make technical decisions explicit                                | `architecture.md` with ADRs          |
+| Solutioning    | `bmad-create-ux-design`               | (Optional)Guidance through realizing the plan for your UX        | `ux-spec.md`                         |
 | Solutioning    | `bmad-create-epics-and-stories`       | Break requirements into implementable work                       | Epic files with stories              |
 | Solutioning    | `bmad-check-implementation-readiness` | Gate check before implementation                                 | PASS/CONCERNS/FAIL decision          |
 | Implementation | `bmad-sprint-planning`                | Initialize tracking (once per project to sequence the dev cycle) | `sprint-status.yaml`                 |
@@ -32,7 +33,7 @@ BMAD [Workflow Map](https://docs.bmad-method.org/reference/workflow-map/)
 
 The `project-context.md` file, located at `{project-root}/docs/project-context.md`, serves as your project's implementation guide for AI agents. Similar to a “constitution” in other development systems, it documents the rules, patterns, and preferences that ensure consistent code generation across all workflows (see [Project Context](https://docs.bmad-method.org/explanation/project-context/)). 
 
-For existing projects, you can generate this file by running the `bmad-bmm-generate-project-context` workflow.
+For existing projects, you can generate this file by running the `bmad-generate-project-context` workflow.
 
 
 ## Reference

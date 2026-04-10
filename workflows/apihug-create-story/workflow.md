@@ -382,6 +382,9 @@ Load config from `{project-root}/_bmad/bmm/config.yaml` and resolve:
       - Error Handling: DomainService throws HopeErrorDetailException; ServiceImpl uses builder.error()
       - Pagination: Receive PageRequest from framework; 0-based index; NEVER call builder.done()
       - Security: JWT/RBAC fully managed by framework — NO manual security code
+      - Helper Services: Place in src/main/java/{package}/domain/{feature}
+        * NEVER place helper services directly under domain/ root
+        * ALWAYS group by feature for cohesion with DomainService
     </critical>
 
     <!-- Frontend Rules -->

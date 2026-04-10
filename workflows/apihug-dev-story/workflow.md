@@ -72,6 +72,7 @@ Load config from `{project-root}/_bmad/bmm/config.yaml` and resolve:
 - `hope_wire` = `{module_path}/src/main/resources/hope-wire.json`
 - `package_name` = `{hope_wire}:packageName`
 - `package_path` = `convert_dots_to_slashes({package_name})`
+- `java_path` = `{module_path}/src/main/java/{package_path}`
 - `module_name` = `{hope_wire}:name`
 - `domain_name` = `{hope_wire}:domain`
 - `application_name` = `{hope_wire}:application`

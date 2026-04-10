@@ -141,10 +141,15 @@
       <critical>PRE-WRITE CHECK: Repository? -> Check rules REPOSITORY LAYER patterns</critical>
       <critical>PRE-WRITE CHECK: Pagination? -> Check rules RESULT and PAGEABLE section</critical>
       <critical>PRE-WRITE CHECK: Error handling? -> Check rules ERROR HANDLING section</critical>
+      <critical>PRE-WRITE CHECK: DomainService/Helper? -> Place in {java_path}/domain/{feature}/</critical>
+      <critical>NEVER place DomainService or helper services directly under domain/ root — ALWAYS use feature subdirectories</critical>
 
       <action>Run: ./gradlew {module_gradle_module}:wire</action>
-      <action>Locate files: grep -r "class {ServiceName}ServiceImpl" {impl_path}/</action>
-      <action>Implement: ServiceImpl (fill method bodies), Repository trait (add queries), DomainService</action>
+      <action>Implement organized by FEATURE:
+        - ServiceImpl: {java_path}/api/{Service}ServiceImpl.java (flat, wire-generated)
+        - DomainService: {java_path}/domain/{feature}/{Feature}DomainService.java
+        - Helper Services: {java_path}/domain/{feature}/{Feature}Helper.java
+      </action>
     </check>
 
     <action>Document technical approach and decisions in Dev Agent Record -> Implementation Plan</action>

@@ -1,9 +1,9 @@
 ---
 name: apihug-impl-front-vben-guide
 description: Current frontend development rules for APIHug Vben UI modules.
-version: 2.0.0
+version: 2.1.0
 author: APIHug Team / H.O.P.E. Infra
-updated: 2026-04-15
+updated: 2026-04-16
 audience: code agents and frontend developers
 ---
 
@@ -225,6 +225,20 @@ In `admin-center`, prefer:
 
 Do not use `toAntdTableColumns(...)` for `admin-center` table pages.
 
+Current customization surface:
+
+- schema hints from backend/generated schema:
+  - `ui.widget`
+  - `ui.props`
+- adapter context:
+  - `t`
+  - `enumLabelPolicy`
+  - `objectMode`
+  - `formatDate`
+- page-level post-processing after `toVbenFormSchema(...)` or `toVxeTableColumns(...)`
+
+`@hope/api-antd-adapter` does not currently expose a field-specific callback hook such as `onBuildField`, `onBuildColumn`, or `fieldOverrides`.
+
 ## 7. Current Form And Table Mapping
 
 ### 7.1 Request schema -> Vben form
@@ -235,6 +249,8 @@ Do not use `toAntdTableColumns(...)` for `admin-center` table pages.
 - `rules`
 - `valueFormat`
 - current app component names
+- `ui.widget` when provided by schema
+- merged `ui.props` into `componentProps`
 
 Current built-in component names aligned with `admin-center`:
 
@@ -256,6 +272,7 @@ Current built-in component names aligned with `admin-center`:
 - `title`
 - `sortable`
 - `formatter`
+- merged `ui.props` into the final column
 
 ### 7.3 Search form placement
 
@@ -340,6 +357,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
 
 Start from adapter output, then patch it in page code.
 Do not edit generated schema files to satisfy one page.
+To customize one field or one column, generate first, then patch the result in page code.
 
 Good:
 
@@ -356,8 +374,35 @@ const searchSchema = toVbenFormSchema(RequestSchema.SearchRolesRequest).map(
         }
       : item,
 );
+```
 
-const columns = [
+```ts
+const formSchema = toVbenFormSchema(RequestSchema.CreateRoleRequest).map((item) =>
+  item.fieldName === 'status'
+    ? {
+        ...item,
+        componentProps: {
+          ...item.componentProps,
+          onChange: (value: string) => console.log(value),
+        },
+      }
+    : item,
+);
+```
+
+```ts
+const columns = toVxeTableColumns(ResponseSchema.RoleSummary).map((col) =>
+  col.field === 'status'
+    ? {
+        ...col,
+        formatter: ({ cellValue }) => `Status: ${cellValue ?? ''}`,
+      }
+    : col,
+);
+```
+
+```ts
+const gridColumns = [
   ...toVxeTableColumns(ResponseSchema.RoleSummary),
   {
     field: 'action',

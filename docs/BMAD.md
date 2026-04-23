@@ -11,9 +11,12 @@ Since BMAD [6.0](https://docs.bmad-method.org/roadmap/) all move to skill Archit
 
 | Phase          | Workflow                              | Purpose                                                          | Produces                             |
 |----------------|---------------------------------------|------------------------------------------------------------------|--------------------------------------|
+| Analysis       | `apihug-docs-readme`                  | Generate docs governance portal (layers, baselines, rules)       | `docs/README.md`                     |
 | Analysis       | `bmad-product-brief`                  | Capture strategic vision                                         | `product-brief.md`                   |
 | Plan           | `bmad-create-prd`                     | Define requirements (FRs/NFRs)                                   | `PRD.md`                             |
+| Plan           | `apihug-domain-strategic-design`        | Define macro domains, bounded contexts, and context map          | `context-map.md`                     |
 | Solutioning    | `bmad-create-architecture`            | Make technical decisions explicit                                | `architecture.md` with ADRs          |
+| Solutioning    | `apihug-domain-tactical-design`         | Refine one macro domain into tactical design documents           | `domains/<domain>/tactical-design.md` + `01~06` |
 | Solutioning    | `bmad-create-ux-design`               | (Optional)Guidance through realizing the plan for your UX        | `ux-spec.md`                         |
 | Solutioning    | `bmad-create-epics-and-stories`       | Break requirements into implementable work                       | Epic files with stories              |
 | Solutioning    | `bmad-check-implementation-readiness` | Gate check before implementation                                 | PASS/CONCERNS/FAIL decision          |

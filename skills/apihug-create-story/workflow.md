@@ -394,6 +394,7 @@ Load config from `{project-root}/_bmad/bmm/config.yaml` and resolve:
       - defineOptions: Unique name (e.g., SystemUser); meta has title, icon, authority
       - Page Patterns: LIST_PAGE (index.vue), FORM_PAGE (components/*Modal.vue), DETAIL_PAGE ([id]/index.vue)
       - Vben Components: useVbenVxeGrid, useVbenForm, useVbenModal
+      - Frontend Sub-Modes: story SHOULD explicitly provide frontend_sub_modes[] and Vben behavior hints for each frontend task when they can be inferred at story-creation time
     </critical>
 
     <!-- Forbidden Rules Validation -->
@@ -453,6 +454,12 @@ Load config from `{project-root}/_bmad/bmm/config.yaml` and resolve:
       - Frontend tasks: LIST_PAGE, FORM_PAGE, DETAIL_PAGE (if applicable)
       - Testing tasks: Unit tests, Integration tests
     </action>
+    <action if="story involves frontend work">Add explicit frontend execution hints in Dev Notes:
+      - per-task frontend_sub_modes[]
+      - expected Vben behavior points
+      - recommended vben-expert references
+      - whether the task combines multiple sub-modes
+    </action>
 
     <!-- Final status -->
     <template-output file="{default_output_file}">story_completion_status</template-output>
@@ -463,7 +470,7 @@ Load config from `{project-root}/_bmad/bmm/config.yaml` and resolve:
     <critical>FINAL STORY VALIDATION (BEFORE SAVING):
       1. Proto rules included? (pageable, reserved words, error codes, Request Message design)
       2. Implementation rules included? (ServiceImpl, Repository trait, error handling, pagination)
-      3. Frontend rules included? (auto-router, SDK usage, page patterns, Vben components)
+      3. Frontend rules included? (auto-router, SDK usage, page patterns, Vben components, frontend sub-modes when applicable)
       4. Implementation Plan section added with task breakdown?
       5. ALL forbidden rules respected? (NO violations!)
       6. All references to golden rules clear and actionable?

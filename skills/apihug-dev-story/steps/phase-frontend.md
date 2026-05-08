@@ -55,7 +55,9 @@
     <check if="no incomplete frontend tasks"><goto step="15">Frontend completion</goto></check>
 
     <action>Determine task type: "list page"/"query" -> LIST_PAGE; "form page"/"add/edit" -> FORM_PAGE; "detail page"/"view" -> DETAIL_PAGE; "component" -> COMPONENT</action>
-    <action>Determine one or more frontend sub-modes from the current task and intended UI behavior:
+    <action>Check story Dev Notes for explicit frontend sub-mode hints, per-task UI behavior notes, or Vben reference expectations for the current frontend task</action>
+    <action if="explicit frontend sub-mode hints exist for the current task">Use those hints as the primary source for `frontend_sub_modes[]`</action>
+    <action if="explicit frontend sub-mode hints do NOT exist for the current task">Determine one or more frontend sub-modes from the current task and intended UI behavior:
       - table/grid/search/columns/tree/custom cell/toolbar -> LIST_GRID
       - field/schema/rules/validation/dependencies/valueFormat -> FORM_SCHEMA
       - detail/read-only/description/overview/long text display -> DETAIL_PRESENTATION

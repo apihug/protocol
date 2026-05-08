@@ -94,6 +94,7 @@
   - DETAIL_PAGE: `views/{module}/[id]/index.vue` with `hideInMenu: true`
 - [ ] **Vben Components:** Correct usage of `useVbenVxeGrid`, `useVbenForm`, `useVbenModal`
 - [ ] **Page Index:** 0-based conversion (`currentPage - 1` for vxe-table)
+- [ ] **Frontend Sub-Modes:** Story provides explicit `frontend_sub_modes[]` and Vben behavior hints for frontend tasks when applicable
 
 ---
 
@@ -125,6 +126,7 @@
 - [ ] **Library/Framework Requirements:** Versions and usage specified
 - [ ] **File Structure Requirements:** Organization and naming conventions clear
 - [ ] **Testing Requirements:** Coverage expectations and patterns defined
+- [ ] **Frontend Execution Hints:** Per-task frontend sub-modes, Vben behavior notes, and recommended `vben-expert` references documented when frontend work exists
 
 ---
 

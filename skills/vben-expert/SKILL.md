@@ -18,7 +18,7 @@ This skill is the secondary router for APIHug frontend story execution.
 
 Always apply frontend decisions in this order:
 
-1. `{project-root}/_bmad/rules/apihug-impl-front-vben-guide.md`
+1. `{project-root}/_bmad/apihug/rules/apihug-impl-front-vben-guide.md`
 2. skill `vben-expert`
 3. selected component docs and playground files
 
@@ -42,7 +42,7 @@ This skill is NOT responsible for:
 - sort, reference, hierarchy, or business-code contracts
 - failure-mode ownership
 
-Those belong to `rules/apihug-impl-front-vben-guide.md`.
+Those belong to `{project-root}/_bmad/apihug/rules/apihug-impl-front-vben-guide.md`.
 
 ## Sub-Mode Routing
 
@@ -180,5 +180,5 @@ Playground code is never the source of truth for:
 Before marking a frontend task complete:
 
 1. Apply `references/review-checklist.md`.
-2. Re-check the failure modes in `rules/apihug-impl-front-vben-guide.md`.
+2. Re-check the failure modes in `{project-root}/_bmad/apihug/rules/apihug-impl-front-vben-guide.md`.
 3. Confirm the implementation still follows the canonical guide.

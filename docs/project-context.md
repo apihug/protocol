@@ -83,13 +83,13 @@ cat {module}/src/main/resources/hope-wire.json
 
 ## Rules Reference
 
-| Topic          | Document                                                 |
-|----------------|----------------------------------------------------------|
-| Proto API      | `_bmad/rules/apihug-proto-api-extension-guide.md`        |
-| Proto Database | `_bmad/rules/apihug-proto-database-modeling-guide.md`    |
-| Proto Enum     | `_bmad/rules/apihug-proto-enum-error-extension-guide.md` |
-| Backend impl   | `_bmad/rules/apihug-impl-golden-rule.md`                 |
-| Frontend impl  | `_bmad/rules/apihug-impl-front-vben-guide.md`            |
-| Project config | `docs/project-context.md`                                |
+| Topic          | Document                                                        |
+|----------------|-----------------------------------------------------------------|
+| Proto API      | `_bmad/apihug/rules/apihug-proto-api-extension-guide.md`        |
+| Proto Database | `_bmad/apihug/rules/apihug-proto-database-modeling-guide.md`    |
+| Proto Enum     | `_bmad/apihug/rules/apihug-proto-enum-error-extension-guide.md` |
+| Backend impl   | `_bmad/apihug/rules/apihug-impl-golden-rule.md`                 |
+| Frontend impl  | `_bmad/apihug/rules/apihug-impl-front-vben-guide.md`            |
+| Project config | `docs/project-context.md`                                       |
 
 For detailed architecture decisions, project structure trees, naming conventions, and rule documents, see `docs/architecture.md`.

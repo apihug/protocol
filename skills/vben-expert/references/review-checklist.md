@@ -2,11 +2,11 @@
 
 Use this checklist before marking any frontend task complete in `apihug-dev-story`.
 
-This checklist is for final verification. The canonical rules still live in `{project-root}/_bmad/rules/apihug-impl-front-vben-guide.md`.
+This checklist is for final verification. The canonical rules still live in `{project-root}/_bmad/apihug/rules/apihug-impl-front-vben-guide.md`.
 
 ## Global Checks
 
-- The implementation still follows `{project-root}/_bmad/rules/apihug-impl-front-vben-guide.md`.
+- The implementation still follows `{project-root}/_bmad/apihug/rules/apihug-impl-front-vben-guide.md`.
 - The selected page pattern still matches the actual page shape.
 - Generated services are used instead of `requestClient`, `axios`, or handwritten API wrappers.
 - `RequestSchema` still drives forms and search forms where applicable.
